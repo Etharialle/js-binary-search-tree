@@ -1,0 +1,1 @@
+et mid = parseInt((start + end) / 2);
