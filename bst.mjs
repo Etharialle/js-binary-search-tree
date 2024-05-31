@@ -13,32 +13,33 @@ class Tree {
         this.root = root;
     }
     buildTree(array) {
+        let start = 0;
+        let end = array.length - 1;
+        if (start > end)
+        {
+            return null;
+        }
+    
+        let middle = parseInt((array.length) / 2);
+        let node = new Node(array[middle]);
+        let leftArray = array.slice(0,middle);
+        let rightArray = array.slice(middle + 1);
 
-    }
-    sortedArrayToBST(array, start, end) {
-    if (start > end)
-    {
-        return null;
-    }
+        node.left = this.buildTree(leftArray);
 
-    let middle = parseInt((start + end) / 2);
-    let node = new Node(array[middle]);
-
-    node.left = this.sortedArrayToBST(array, start, middle - 1);
-
-    node.right = this.sortedArrayToBST(array, middle + 1, end);
-    return node;
+        node.right = this.buildTree(rightArray);
+        return node;
     }
 }
 
-let testArray = [1, 2, 3, 4, 92, 15, 13, 27];
+let testArray = [1, 2, 3, 4];
 let sortedArray = mergeSort(testArray);
 console.log(sortedArray);
 const bst = new Tree();
 console.log(bst);
-//bst.buildTree(sortedArray);
+bst.root = bst.buildTree(sortedArray);
 console.log(bst);
-bst.root = bst.sortedArrayToBST(sortedArray, 0, 7);
+//bst.root = bst.sortedArrayToBST(sortedArray, 0, 7);
 // set root to middle
 // split array to left and right
 // left = array.slice(0, middle)
