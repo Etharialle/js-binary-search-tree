@@ -12,7 +12,11 @@ class Tree {
     constructor (root = null) {
         this.root = root;
     }
-    buildTree(array) {
+    buildTree(array){
+        let sortedArray = Array.from(new Set(mergeSort(array)));
+        this.root = this.buildTreeFromClean(sortedArray);
+    }
+    buildTreeFromClean(array) {
         let start = 0;
         let end = array.length - 1;
         if (start > end)
@@ -25,28 +29,44 @@ class Tree {
         let leftArray = array.slice(0,middle);
         let rightArray = array.slice(middle + 1);
 
-        node.left = this.buildTree(leftArray);
-
-        node.right = this.buildTree(rightArray);
+        node.left = this.buildTreeFromClean(leftArray);
+        node.right = this.buildTreeFromClean(rightArray);
         return node;
     }
+    insertNode(value, root = this.root) {
+        if (this.root === null) {
+            this.root = new Node(value);
+            return root;
+        }
+        if (root === null) {
+            return new Node(value);
+        }
+        if (value === root.data) {
+            console.log("Duplicate node");
+            return root;
+        }
+        if (value < root.data) {
+            root.left = this.insertNode(value, root.left);
+        }
+        if (value > root.data) {
+            root.right = this.insertNode(value, root.right);
+        }
+        return root;
+        //while ((value < currentNode.data) && currentNode.left !== null) {
+        //    currentNode = currentNode.left;
+        //    if (value === currentNode.data) {
+        //        console.log("Duplicate node");
+        //        return false;
+        //    }
+        //    if (currentNode.left === null) {
+        //        currentNode.left = new Node(value);
+        //        return;
+        //    }
+        //}
+        //while ((value > currentNode.data) && currentNode.right !== null) {
+    }
 }
-
-let testArray = [1, 2, 3, 4];
-let sortedArray = mergeSort(testArray);
-console.log(sortedArray);
-const bst = new Tree();
-console.log(bst);
-bst.root = bst.buildTree(sortedArray);
-console.log(bst);
-//bst.root = bst.sortedArrayToBST(sortedArray, 0, 7);
-// set root to middle
-// split array to left and right
-// left = array.slice(0, middle)
-// right = array.slice(middle + 1)
-// if left.length > 0 then buildTree(left)
-// if right.length > 0 then buildTree(right)
-
+//========= Start prettyPrint ====================
 const prettyPrint = (node, prefix = "", isLeft = true) => {
     if (node === null) {
       return;
@@ -59,5 +79,14 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
       prettyPrint(node.left, `${prefix}${isLeft ? "    " : "│   "}`, true);
     }
   };
+//========= End prettyPrint ====================
 
-  prettyPrint(bst.root);
+let testArray = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324];
+const bst = new Tree();
+
+bst.buildTree(testArray);
+//console.log(bst.root);
+bst.insertNode(66);
+console.log(bst.root);
+
+prettyPrint(bst.root);
