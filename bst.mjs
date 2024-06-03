@@ -52,18 +52,39 @@ class Tree {
             root.right = this.insertNode(value, root.right);
         }
         return root;
-        //while ((value < currentNode.data) && currentNode.left !== null) {
-        //    currentNode = currentNode.left;
-        //    if (value === currentNode.data) {
-        //        console.log("Duplicate node");
-        //        return false;
-        //    }
-        //    if (currentNode.left === null) {
-        //        currentNode.left = new Node(value);
-        //        return;
-        //    }
-        //}
-        //while ((value > currentNode.data) && currentNode.right !== null) {
+    }
+    removeNode(value, root = this.root) {
+        if (this.root === null) {
+            console.log("Nothing to delete");
+            return root;
+        }
+        if (value === this.root.data && this.root.left === null && this.root.right === null) {
+            this.root = null;
+            return root;
+        }
+        if (value === root.left.data) {
+            let removeNode = root.left;
+            if (removeNode.left === null && removeNode.right === null) {
+                root.left = null;
+                return root;
+            }
+            if (removeNode.right === null) {
+                root.left = removeNode.left;
+                return root;
+            }
+        }
+        if (value === root.right.data) {
+            let removeNode = root.right;
+            if (removeNode.left === null && removeNode.right === null) {
+                root.right = null;
+                return root;
+            }
+            if (removeNode.right === null) {
+                root.right = removeNode.left;
+                return root;
+            }
+        }
+
     }
 }
 //========= Start prettyPrint ====================
@@ -81,12 +102,13 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
   };
 //========= End prettyPrint ====================
 
-let testArray = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324];
+let testArray = [1,2,3,4,5];
 const bst = new Tree();
 
 bst.buildTree(testArray);
 //console.log(bst.root);
-bst.insertNode(66);
+//bst.insertNode(66);
 console.log(bst.root);
-
+bst.removeNode(2);
+bst.removeNode(5);
 prettyPrint(bst.root);
