@@ -62,14 +62,22 @@ class Tree {
             this.root = null;
             return root;
         }
+        //if (value === this.root.data && this.root.right === null) {
+        //
+        //}
         if (value === root.left.data) {
             let removeNode = root.left;
             if (removeNode.left === null && removeNode.right === null) {
                 root.left = null;
                 return root;
-            }
-            if (removeNode.right === null) {
+            } else if (removeNode.right === null) {
                 root.left = removeNode.left;
+                return root;
+            } else {
+                let rightNode = removeNode.right;
+                
+                rightNode.left = removeNode.left;
+                root.left = rightNode;
                 return root;
             }
         }
@@ -102,13 +110,16 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
   };
 //========= End prettyPrint ====================
 
-let testArray = [1,2,3,4,5];
+let testArray = [1,2,3,4,5,6,7];
 const bst = new Tree();
 
 bst.buildTree(testArray);
 //console.log(bst.root);
 //bst.insertNode(66);
 console.log(bst.root);
-bst.removeNode(2);
 bst.removeNode(5);
+//bst.removeNode(4);
+//bst.removeNode(2);
+bst.removeNode(3);
+bst.removeNode(2);
 prettyPrint(bst.root);
