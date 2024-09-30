@@ -156,6 +156,7 @@ export class BST {
         }
     }
     breadthFirst(callback) {
+
         if (!callback) {
             throw new Error("Callback required");
         }
@@ -164,7 +165,6 @@ export class BST {
                 return;
             }
             const queue = [this.root];
-        
             while (queue.length > 0) {
                 const node = queue.shift();
                 callback(node);
@@ -174,6 +174,17 @@ export class BST {
         } catch (e) {
             console.error(e);
         }
-        
+    }
+    height(node) {
+        const getHeight = function(node) {
+            if (node === null) {
+                return 0;
+            } else {
+            const leftHeight = getHeight(node.left);
+            const rightHeight = getHeight(node.right)
+            return Math.max(leftHeight, rightHeight) + 1;
+            }
+        }
+        this.root = getHeight(node);
     }
 }

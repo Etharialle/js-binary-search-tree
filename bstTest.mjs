@@ -28,5 +28,7 @@ testTree.buildTree(testArray);
 prettyPrint(testTree.root);
 
 console.log(...testTree.levelOrder());
-testTree.breadthFirst(node => console.log(node.data));
+//const resultArray = [];
+console.log(testTree.breadthFirst(node => console.log(node.data)));
+//console.log(resultArray);
 
